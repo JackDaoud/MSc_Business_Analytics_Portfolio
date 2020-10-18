@@ -1,4 +1,4 @@
-# Text_Adventure_Game
+# Text Adventure Game
 
 This is a project from the course ***Data Science: Python*** which is a part of **Hult's MSc. in Business Analytics program in Boston**.
 
