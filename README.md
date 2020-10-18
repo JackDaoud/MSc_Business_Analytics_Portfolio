@@ -2,7 +2,7 @@
 
 This is a project from the course ***Data Science: Python*** which is a part of **Hult's MSc. in Business Analytics program in Boston**.
 
-The project cover these **Python fundamentals**:
+The project covers these **Python fundamentals** but is not limited to them:
 
 - Strings and String Manipulation
 - User-Defined Functions and Objects (variables)
@@ -10,6 +10,8 @@ The project cover these **Python fundamentals**:
 - Conditional and Nested Conditional Statements (if/elif/else)
 - Loops (for/while)
 - Controlling for Errors
+
+---
 
 This fantasy text adventure game consists of three rounds. The first is a brief dialogue with an elven oracle, the second is fortune telling using tarot cards to determine eligibility for a quest, and the third is the quest of a magic battle against an evil warlock who is keeping the queen of elves prisoner in a tower. You'll cast magic by rolling dice. 
 
