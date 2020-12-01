@@ -5,7 +5,7 @@ Sun, 8th Nov 2020
 
 This project focussed on exploring World Bank data consisting of 41 indicators on 217 countries. This report will focus on the Arabian Peninsula region of the dataset, consisting of 15 countries. The purpose of the project was to conduct an exploratory analysis supported by external research. 
 
-Collaborators: [Jack Daoud](https://github.com/JackDaoud) and [Sara Mareike Krause](https://github.com/Sara-Krause)
+Collaborators: [Estrella Spaans](https://github.com/EstrellaSpaans) and [Sara Mareike Krause](https://github.com/Sara-Krause)
 
 ---
 ### Exploratory Analysis:
