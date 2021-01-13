@@ -1,4 +1,4 @@
-# Python World Data Region Analysis 
+# World Bank Region EDA 
 ## Jupiter Notebook Report
 
 Sun, 8th Nov 2020
