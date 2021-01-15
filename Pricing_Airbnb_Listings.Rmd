@@ -2,6 +2,11 @@
 title: "What affects the Price of Airbnb Listings in NYC?"
 author: "by Alexey Yushkin and Jack Daoud"
 output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+    df_print: paged
   html_notebook:
     number_sections: yes
     theme: readable
@@ -9,9 +14,6 @@ output:
     toc: yes
     toc_float:
       collapsed: yes
-  html_document:
-    toc: yes
-    df_print: paged
 ---
 ```{r load packages, message=FALSE, warning=FALSE, include=FALSE}
 # REMOVE # to install packages
@@ -49,7 +51,7 @@ Previous research regarding Airbnb accommodation prices had found that "price is
 
 ```{r research findings, echo=FALSE, message=FALSE, warning=FALSE}
 # import data set holding previous findings
-research_findings <- read_csv(file = "./Data/Markdown_Data/research_paper_data.csv")
+research_findings <- read_csv(file = "./_data/Markdown_Data/research_paper_data.csv")
 
 # knit into a table
 kable(research_findings)
@@ -91,7 +93,7 @@ The data sets we'll be analyzing revolves around Airbnb listings in New York Cit
 
 ```{r data collection, echo=FALSE, message=FALSE, warning=FALSE}
 # import summary of data sets used in this report
-data_sets <- read_csv(file = './Data/Markdown_Data/data_sets.csv')
+data_sets <- read_csv(file = './_data/Markdown_Data/data_sets.csv')
 
 # knit into a table
 kable(data_sets)
@@ -111,14 +113,14 @@ The data wrangling process involved joining the data sets in 5 sequential steps:
 
 ```{r subway stations, include=FALSE}
 # import data set for wrangling
-original_listings <- read_csv("./Data/Original_Data/listingsNYC.csv")
+original_listings <- read_csv("./_data/Original_Data/listingsNYC.csv")
 
 # create data frame for distance calculation
 coordinates <- original_listings %>% 
   select(id, longitude, latitude)
 
 # import data set to extract necessary variables
-subway <- read.csv("./Data/Original_Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv", 
+subway <- read.csv("./_data/Original_Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv", 
                    stringsAsFactors = FALSE)
 
 # calculate the distance between each listing and subway entrance
@@ -134,19 +136,19 @@ original_listings["distance_from_subway_station"] <- min_dist
 original_listings["station"] <- subway[min_dist, 3]
 
 # write amended data set to the file
-write_csv(original_listings, "./Data/Manipulated_Data/listingsNYC_w_subway.csv")
+write_csv(original_listings, "./_data/Manipulated_Data/listingsNYC_w_subway.csv")
 ```
 
 ```{r bus stations, include=FALSE}
 # import data set for wrangling
-manipulated_listings <- read_csv("./Data/Manipulated_Data/listingsNYC_w_subway.csv")
+manipulated_listings <- read_csv("./_data/Manipulated_Data/listingsNYC_w_subway.csv")
 
 # create data frame for distance calculation
 coordinates <- manipulated_listings %>% 
   select(id, longitude, latitude)
 
 # import data set to extract necessary variables
-bus <- read.csv("./Data/Original_Data/Bus_Stop_Shelter.csv", 
+bus <- read.csv("./_data/Original_Data/Bus_Stop_Shelter.csv", 
                    stringsAsFactors = FALSE)
 
 # calculate the distance between each listing and bus stop
@@ -162,19 +164,19 @@ manipulated_listings["distance_from_bus_stop"] <- min_dist
 manipulated_listings["stop"] <- bus[min_dist, 8]
 
 # write amended data set to the file
-write_csv(manipulated_listings, "./Data/Manipulated_Data/listingsNYC_w_transport.csv")
+write_csv(manipulated_listings, "./_data/Manipulated_Data/listingsNYC_w_transport.csv")
 ```
 
 ```{r tourist attractions, include=FALSE}
 # import data set for wrangling
-manipulated_listings <- read_csv("./Data/Manipulated_Data/listingsNYC_w_transport.csv")
+manipulated_listings <- read_csv("./_data/Manipulated_Data/listingsNYC_w_transport.csv")
 
 # create data frame for distance calculation
 coordinates <- manipulated_listings %>% 
   select(id, longitude, latitude)
 
 # import data set to extract necessary variables
-cult_orgs <- read.csv("./Data/Original_Data/DCLA_Cultural_Organizations.csv", 
+cult_orgs <- read.csv("./_data/Original_Data/DCLA_Cultural_Organizations.csv", 
                    stringsAsFactors = FALSE)
 
 # calculate the distance between each listing and cultural organizations
@@ -189,13 +191,13 @@ n_cult_orgs <- rowSums(dist < 150, na.rm = TRUE)
 manipulated_listings["n_cult_orgs"] <- n_cult_orgs
 
 # write amended data set to the file
-write_csv(manipulated_listings, "./Data/Manipulated_Data/listingsNYC_w_transp_cult.csv")
+write_csv(manipulated_listings, "./_data/Manipulated_Data/listingsNYC_w_transp_cult.csv")
 ```
 
 ```{r crime rate, include=FALSE}
 # import data set for wrangling
-shooting_hist <- read_csv("./Data/Original_Data/NYPD_Shooting_Incident_Data__Historic_.csv")
-shooting_2020 <- read_csv("./Data/Original_Data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv")
+shooting_hist <- read_csv("./_data/Original_Data/NYPD_Shooting_Incident_Data__Historic_.csv")
+shooting_2020 <- read_csv("./_data/Original_Data/NYPD_Shooting_Incident_Data__Year_To_Date_.csv")
 
 # join the imported data sets to form one
 shooting <- full_join(shooting_hist, shooting_2020) 
@@ -221,7 +223,7 @@ crime_rate_by_neibs <- precincts %>%
 
 
 # read 911 calls data
-calls_911 <- read_csv("./Data/Original_Data/NYPD_Calls_for_Service.csv")
+calls_911 <- read_csv("./_data/Original_Data/NYPD_Calls_for_Service.csv")
 
 # calculate calls per precincts
 calls_911_num <- calls_911 %>% 
@@ -236,7 +238,7 @@ crime_rate_by_neibs <- crime_rate_by_neibs %>%
 
 
 # nearest precinct
-manipulated_listings <- read_csv("./Data/Manipulated_Data/listingsNYC_w_transp_cult.csv")
+manipulated_listings <- read_csv("./_data/Manipulated_Data/listingsNYC_w_transp_cult.csv")
 
 # coordinates of apartments/houses
 coordinates <- manipulated_listings %>% 
@@ -256,17 +258,17 @@ manipulated_listings["shooting_number"] <- crime_rate_by_neibs[min_dist, 4]
 manipulated_listings["calls_911_number"] <- crime_rate_by_neibs[min_dist, 5]
 
 # write amended data set to the file
-write_csv(manipulated_listings, "./Data/Manipulated_Data/listings_w_crimes.csv")
+write_csv(manipulated_listings, "./_data/Manipulated_Data/listings_w_crimes.csv")
 ```
 
 ```{r listings reviews, include=FALSE}
 
 # read file with reviews, select needed columns
-reviews_all <- read_csv("./Data/Original_Data/listing_reviewsNYC.csv") %>%
+reviews_all <- read_csv("./_data/Original_Data/listing_reviewsNYC.csv") %>%
   select(listing_id, id)
 
 # select needed columns
-sentiments <- read_csv("./Data/Manipulated_Data/sentiments_2020-12-06.csv")
+sentiments <- read_csv("./_data/Manipulated_Data/sentiments_2020-12-06.csv")
 sentiments_id_sent <- select(sentiments, id, sentiment)
 
 # This data set was created via a sentiment analysis we conducted. Please see Sentiment Analysis subsection in Appendix for more details.
@@ -304,7 +306,7 @@ reviews_numbs <- reviews_all %>%
   rename(id = "listing_id")
 
 # read the file with listings
-listings_all <- read_csv("./Data/Manipulated_Data/listings_w_crimes.csv")
+listings_all <- read_csv("./_data/Manipulated_Data/listings_w_crimes.csv")
 
 # add reviews numbers to the listings table
 listings_all <- listings_all %>% 
@@ -332,14 +334,14 @@ listings_all <- select(listings_all, -id, -name, -host_id, -host_name,
                        -stop, -precinct)
 
 # write amended data set to the file
-write_csv(listings_all, "./Data/Manipulated_Data/listings_updated.csv")
+write_csv(listings_all, "./_data/Manipulated_Data/listings_updated.csv")
 ```
 
 ## Variable Selection:
 
 ```{r variable selection, include=FALSE}
 # read the file with listings
-listings_all <- read_csv("./Data/Manipulated_Data/listings_updated.csv")
+listings_all <- read_csv("./_data/Manipulated_Data/listings_updated.csv")
 ```
 
 The finalized data set produced, after joining all aforementioned data sets & conducting data analysis below, has 19 key variables:
@@ -420,7 +422,7 @@ ggplot(listings_all, aes(x = log_price)) +
   theme(plot.title = element_text(hjust = 0.5))
 
 # write amended data set to file
-write_csv(listings_all, "./Data/Manipulated_Data/listings_updated.csv")
+write_csv(listings_all, "./_data/Manipulated_Data/listings_updated.csv")
 ```
 
 What is the cause of all these outliers in terms of price? It could be a categorical variable, such as the neighborhood group or room type of the listing. It is important to note, although these prices are considered to **statistical outliers**, really expensive listings and really cheap listings have their **business justifications that make them normal**. For example, a listing in a booming location with extremely fancy furniture & many amenities. Therefore, these outliers will be considered throughout the analysis.
@@ -490,7 +492,7 @@ for (i in 1:nrow(listings_all)) {
 listings_all <- select(listings_all, -room_type)
 
 # write amended data set to file
-write_csv(listings_all, "./Data/Manipulated_Data/listings_updated.csv")
+write_csv(listings_all, "./_data/Manipulated_Data/listings_updated.csv")
 ```
 
 ### Minimum nights
@@ -539,7 +541,7 @@ listings_all %>%
   theme(plot.title = element_text(hjust = 0.5))
 
 # write amended data set to file
-write_csv(listings_all, "./Data/Manipulated_Data/listings_updated.csv")
+write_csv(listings_all, "./_data/Manipulated_Data/listings_updated.csv")
 ```
 
 Approximately **15%** of listings are for **long-term** stays whereas **85%** are for **short-term**. Furthermore, we'll assume that long-term pricing strategies for listings are static and predictable, whereas short-term pricing strategies are more dynamic and less predictable. Based on this, *our analysis will focus on the short-term listings and exclude long-term ones*.
@@ -604,7 +606,7 @@ listings_all %>%
   theme(plot.title = element_text(hjust = 0.5))
 
 # write amended data set to file
-write_csv(listings_all, "./Data/Manipulated_Data/listings_updated.csv")
+write_csv(listings_all, "./_data/Manipulated_Data/listings_updated.csv")
 ```
 The distributions of review sentimentality and price are strikingly similar, hinting at the fact that either 
 
@@ -868,7 +870,7 @@ listings_w_demand <- listings_w_demand %>%
   mutate(days_last_rev_log = log(days_last_rev))
 
 # write amended data set to the file
-write_csv(listings_w_demand, "./Data/Manipulated_Data/listings_w_transformations.csv")
+write_csv(listings_w_demand, "./_data/Manipulated_Data/listings_w_transformations.csv")
 ```
 
 Other than those transformations, there will be no major adjustments other than the aspect in which we will assess the relationships between all the aforementioned variables and price. When looking at each variable, we'll have to split the modeling based on specific categories such as listing type (`Entire home/apt`), rent duration (`long_term_rent`), and `neighborhood group`. Furthermore, when assessing review sentimentality, we will attempt a variety of approaches by looking at sentimentality as a number, factor, and proportion.
@@ -1298,29 +1300,24 @@ Furthermore, in regards to #3, the idea that less reviews (or at least an increa
 
 "In addition, the findings show that the number of reviews received on Airbnb by an accommodation is negatively correlated to its price. This result is consistent with the evidence provided by Gibbs et al. (2018), who suggested that the lower the price, the higher the number of bookings and, in turn, the higher the number of reviews." (Magno *et al.*, 2018)
 
+
+## Three Major Insights
+
 In conclusion, the **three major insights** we can derive from our analysis (that was not found in previous research) are:
 <br>
 
---------------------------------------------------------------------------------
 1. Number of shootings in a neighborhood, which we have chosen as a criminal ratio, has a significant negative impact on price.
---------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
 2. Number of tourist attractions nearby the listing have a significant positive impact on the price.
---------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
 3. Existence of negative reviews has a significant negative impact on the price.
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
 
 # Appendix
 
 ## Data Sources
 ```{r data sources, echo=FALSE, message=FALSE, warning=FALSE}
 # import data sources
-data_sources <- read_csv(file = "./Data/Markdown_Data/data_sources.csv")
+data_sources <- read_csv(file = "./_data/Markdown_Data/data_sources.csv")
 
 # knit into a table
 kable(data_sources)
