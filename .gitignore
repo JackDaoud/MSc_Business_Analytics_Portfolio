@@ -1,3 +1,6 @@
+.DS_Store
+.gitignore
+
 # History files
 .Rhistory
 .Rapp.history
