@@ -10,12 +10,12 @@ Database with dummy data. This file contains the database (advertising managemen
 File: [ad_mgmt_v4.sql](https://github.com/maxlembke/SQL_Advertising_Management_Platform/blob/main/ad_mgmt_v4.sql)
 
 ### 2) Queries 
-Collection of queries and "commented-out" stored prodedures that were designed for use with the database. 
+Collection of queries and "commented-out" stored procedures that were designed for use with the database.
 
 File: [Lembke_Max_A1_Classification_Model_Development](https://github.com/maxlembke/ML_Classification_Apprentice_Chef/blob/main/Lembke_Max_A1_Classification_Model_Development.ipynb)
 
 ### 3) Report 
-Written report on the database created. This contains an examination of key buisness problems, the proposed solution, scope & limitions. 
+Written report on the database created. This contains an examination of key business problems, the proposed solution, scope & limitations.
 
 File: [A2_Team_20](https://github.com/maxlembke/SQL_Advertising_Management_Platform/blob/main/A2_Team_20.pdf)
 
