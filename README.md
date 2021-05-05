@@ -12,7 +12,7 @@ File: [ad_mgmt_v4.sql](https://github.com/maxlembke/SQL_Advertising_Management_P
 ### 2) Queries 
 Collection of queries and "commented-out" stored procedures that were designed for use with the database.
 
-File: [Lembke_Max_A1_Classification_Model_Development](https://github.com/maxlembke/ML_Classification_Apprentice_Chef/blob/main/Lembke_Max_A1_Classification_Model_Development.ipynb)
+File: [all_queries](https://github.com/maxlembke/SQL_Advertising_Management_Platform/blob/main/all_queries.sql)
 
 ### 3) Report 
 Written report on the database created. This contains an examination of key business problems, the proposed solution, scope & limitations.
