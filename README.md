@@ -19,6 +19,6 @@ Written report on the database created. This contains an examination of key buis
 
 File: [A2_Team_20](https://github.com/maxlembke/SQL_Advertising_Management_Platform/blob/main/A2_Team_20.pdf)
 
-DISCLAIMER: All the data in the database is randomly generated
+**DISCLAIMER: All the data in the database is randomly generated**
 
 Do not use any statistic contained in the report, all illustrative graphs and output tables have been created using randomly generated data to demonstrate how the database and queries would work.
