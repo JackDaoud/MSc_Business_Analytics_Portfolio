@@ -21,4 +21,4 @@ File: [A2_Team_20](https://github.com/maxlembke/SQL_Advertising_Management_Platf
 
 **DISCLAIMER: All the data in the database is randomly generated**
 
-Do not use any statistic contained in the report, all illustrative graphs and output tables have been created using randomly generated data to demonstrate how the database and queries would work.
+***Do not use any statistic contained in the report, all illustrative graphs and output tables have been created using randomly generated data to demonstrate how the database and queries would work.***
