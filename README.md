@@ -13,8 +13,8 @@ I was tasked with using the information in our course case to build a predictive
 File: [Lembke_Max_A1_Classification_Model_Development](https://github.com/maxlembke/ML_Classification_Apprentice_Chef/blob/main/Lembke_Max_A1_Classification_Model_Development.ipynb)
 
 ### 3) Report 
-Our team was tasked to analyze and interpret an unsupervised learning problem based on survey data. This required an ability to code unsupervised machine learning algorithms and interpret their results.
-File: [Team_17_A2_Analysis_v2.1.ipynb](https://github.com/maxlembke/ML_Classification_Apprentice_Chef/blob/main/Team_17_A2_Analysis_v2.1.ipynb)
+Written report on the database created. This contains an examination of key buisness problems, the proposed solution, scope & limitions. 
+File: [A2_Team_20](https://github.com/maxlembke/SQL_Advertising_Management_Platform/blob/main/A2_Team_20.pdf)
 
 DISCLAIMER: All the data in the database is randomly generated
 
