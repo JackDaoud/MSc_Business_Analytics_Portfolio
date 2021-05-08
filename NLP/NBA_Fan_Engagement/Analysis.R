@@ -1,20 +1,20 @@
----
-title: "Text Analysis: NBA Fan Engagement via Twitter"
-author: "by Jack Daoud"
-output:
-  html_notebook:
-    number_sections: yes
-    theme: readable
-    highlight: pygments
-    toc: yes
-    toc_float:
-      collapsed: no
-  html_document:
-    toc: yes
-    df_print: paged
----
-
-```{r options & packages, message=FALSE, warning=FALSE, include=FALSE}
+#' ---
+#' title: "Text Analysis: NBA Fan Engagement via Twitter"
+#' author: "by Jack Daoud"
+#' output:
+#'   html_notebook:
+#'     number_sections: yes
+#'     theme: readable
+#'     highlight: pygments
+#'     toc: yes
+#'     toc_float:
+#'       collapsed: no
+#'   html_document:
+#'     toc: yes
+#'     df_print: paged
+#' ---
+#' 
+## ----options & packages, message=FALSE, warning=FALSE, include=FALSE-------------------------------------------
 # REMOVE # to install packages
 #install.packages("plyr")
 #install.packages("qdap")
@@ -42,13 +42,13 @@ set.seed(123)
 
 # set working directory
 #setwd('./personal/case_NBA')
-```
 
-# Data Exploration
-
-## Import
-
-```{r import & sample data, message=FALSE, warning=FALSE}
+#' 
+#' # Data Exploration
+#' 
+#' ## Import
+#' 
+## ----import & sample data, message=FALSE, warning=FALSE--------------------------------------------------------
 # import and merge all data sets Oct 2019-20
 data_directory <- "./_data/original"
 csv_files      <- list.files(path       = data_directory, 
@@ -61,11 +61,11 @@ tweets         <- slice_sample(tweets, prop = 0.01)
 
 # export tweet sample
 write.csv(tweets,'./_data/manipulated/tweets_sample.csv', row.names = F)
-```
 
-## Wrangle
-
-```{r data wrangling, message=FALSE, warning=FALSE}
+#' 
+#' ## Wrangle
+#' 
+## ----data wrangling, message=FALSE, warning=FALSE--------------------------------------------------------------
 # import tweet sample
 tweets <- read_csv('./_data/manipulated/tweets_sample.csv')
 
@@ -134,13 +134,13 @@ tweets <- tweets %>% filter(year  != 2019 | month != 'Sep')
 ################################################################################
 # Export wrangled data
 write.csv(tweets,'./_data/manipulated/tweets_sample_wrangled.csv', row.names = F)
-```
 
-## Data Overview Plots
-
-**Tweets per Region not used in presentation**
-
-```{r high level data exploration, message=FALSE, warning=FALSE}
+#' 
+#' ## Data Overview Plots
+#' 
+#' **Tweets per Region not used in presentation**
+#' 
+## ----high level data exploration, message=FALSE, warning=FALSE-------------------------------------------------
 # import wrangled tweets
 tweets <- read_csv('./_data/manipulated/tweets_sample_wrangled.csv')
 
@@ -220,14 +220,14 @@ tweets_per_region <-
 
 # save plot
 ggsave("./_images/tweets_per_region.png", tweets_per_region, bg = "transparent")
-```
 
-
-# Corpus Preprocessing
-
-## Define Stop Words
-
-```{r stop words, message=FALSE, warning=FALSE}
+#' 
+#' 
+#' # Corpus Preprocessing
+#' 
+#' ## Define Stop Words
+#' 
+## ----stop words, message=FALSE, warning=FALSE------------------------------------------------------------------
 nbaStopwords = c('nba','teams','fans','live','games','points','pacers', 'pts',
                   'year','back','coach','tonight','city','time','today',
                   'season','win','state','basketball','team','game','sports',
@@ -292,11 +292,11 @@ customStopwords <- c(
   teamStopwords,
   abbreviationStopwords,
   iterativeStopwords)
-```
 
-## Preprocessing Functions
-
-```{r define text processing functions, message=FALSE, warning=FALSE}
+#' 
+#' ## Preprocessing Functions
+#' 
+## ----define text processing functions, message=FALSE, warning=FALSE--------------------------------------------
 ################################################################################
 tryTolower <- function(text_column) {
   #' Returns NA instead of tolower error
@@ -417,12 +417,12 @@ cleanMatrix <- function(pth, columnName, collapse = F, customStopwords,
 bigramTokens <- function(x) {
   unlist(lapply(NLP::ngrams(words(x), 2), paste, collapse = " "), use.names = F)
 }
-```
 
-
-## Corpus & TDM
-
-```{r create, clean & export corpus, message=FALSE, warning=FALSE}
+#' 
+#' 
+#' ## Corpus & TDM
+#' 
+## ----create, clean & export corpus, message=FALSE, warning=FALSE-----------------------------------------------
 # import wrangled tweets sample
 tweets <- read_csv('./_data/manipulated/tweets_sample_wrangled.csv')
 
@@ -452,11 +452,11 @@ write.csv(cleaned_corpora,'./_data/manipulated/cleaned_corpora.csv',
 # Convert corpus into Term Document Matrix
 tweetTDM   <- TermDocumentMatrix(tweetCorpus)
 tweetTDMm  <- as.matrix(tweetTDM)
-```
 
-## Bigram TDM
-
-```{r create bigram df, corpus, & TDM}
+#' 
+#' ## Bigram TDM
+#' 
+## ----create bigram df, corpus, & TDM---------------------------------------------------------------------------
 # Reduce size in order to process bigram TDM
 bigram_tweets <- slice_sample(tweets, prop = 0.1)
 
@@ -469,14 +469,14 @@ bigramCorpus <- cleanCorpus(bigramCorpus, customStopwords)
 # Create a bigram TDM
 bigramTDM  <- TermDocumentMatrix(bigramCorpus, control=list(tokenize=bigramTokens))
 bigramTDMm <- as.matrix(bigramTDM)
-```
 
-
-# Visualizations
-
-## Share of Brand
-
-```{r share of brand, message=FALSE, warning=FALSE}
+#' 
+#' 
+#' # Visualizations
+#' 
+#' ## Share of Brand
+#' 
+## ----share of brand, message=FALSE, warning=FALSE--------------------------------------------------------------
 # Import cleaned corpora
 #cleaned_corpora <- read_csv('./_data/manipulated/cleaned_corpora.csv')
 
@@ -516,15 +516,15 @@ mentions_per_brand <-
 
 # save image
 ggsave("./_images/mentions_per_brand.png", mentions_per_brand, bg = "transparent")
-```
 
-## Word Frequency
-
-**Unigram & Bigram top names plots not used in presentation**
-
-### Unigram
-
-```{r unigram frequencies, message=FALSE, warning=FALSE}
+#' 
+#' ## Word Frequency
+#' 
+#' **Unigram & Bigram top names plots not used in presentation**
+#' 
+#' ### Unigram
+#' 
+## ----unigram frequencies, message=FALSE, warning=FALSE---------------------------------------------------------
 # Frequency Data Frame
 tweetSums <- rowSums(tweetTDMm)
 tweetFreq <- data.frame(word=names(tweetSums),frequency=tweetSums)
@@ -563,11 +563,11 @@ unigrams_top_names<-
 
 # save image
 ggsave("./_images/top_names_unigrams.png", unigrams_top_names, bg = "transparent")
-```
 
-### Bigram
-
-```{r bigram frequencies, message=FALSE, warning=FALSE}
+#' 
+#' ### Bigram
+#' 
+## ----bigram frequencies, message=FALSE, warning=FALSE----------------------------------------------------------
 # Frequency Data Frame
 bigramSums <- rowSums(bigramTDMm)
 bigramFreq <- data.frame(word=names(bigramSums),frequency=bigramSums)
@@ -605,12 +605,12 @@ bigrams_top_names <-
 
 # save image
 ggsave("./_images/top_names_bigrams.png", bigrams_top_names, bg = "transparent")
-```
 
-
-## Word Clouds
-
-```{r word clouds, message=FALSE, warning=FALSE}
+#' 
+#' 
+#' ## Word Clouds
+#' 
+## ----word clouds, message=FALSE, warning=FALSE-----------------------------------------------------------------
 #cleaned_corpora <- read_csv('./_data/manipulated/cleaned_corpora.csv')
 
 # worldcloud of words associated with Nike
@@ -641,11 +641,11 @@ wordcloud(words        = tweetFreq$word,
           rot.per      = 0.35, 
           colors       = c('black', 'darkred','darkblue'),
           use.r.layout = T)
-```
 
-## Word Associations
-
-```{r word associations, message=FALSE, warning=FALSE}
+#' 
+#' ## Word Associations
+#' 
+## ----word associations, message=FALSE, warning=FALSE-----------------------------------------------------------
 ################################################################################
 # Nike associations
 nikeAssociations <- findAssocs(tweetTDM, 'nike', 0.15)
@@ -708,13 +708,13 @@ adidasAssocPlot <-
 
 # save image
 ggsave("./_images/associations_adidas.png", adidasAssocPlot, bg = "transparent")
-```
 
-## Dendograms 
-
-**Not used in Presentation**
-
-```{r NOT USED dendrogram, message=FALSE, warning=FALSE}
+#' 
+#' ## Dendograms 
+#' 
+#' **Not used in Presentation**
+#' 
+## ----NOT USED dendrogram, message=FALSE, warning=FALSE---------------------------------------------------------
 # Reduce corpus by removing documents with more than 99.5% 0 terms
 reducedTDM <- removeSparseTerms(tweetTDM, sparse=0.993)
 reducedTDM <- as.data.frame(as.matrix(reducedTDM))
@@ -766,11 +766,11 @@ hierarchical_cluster_dendogram <-
 circlize_dendrogram(hierarchical_cluster_dendogram, 
                     labels_track_height = 0.4, dend_track_height = 0.3)
 
-```
 
-## Pyramid Plot
-
-```{r adidas vs nike, message=FALSE, warning=FALSE}
+#' 
+#' ## Pyramid Plot
+#' 
+## ----adidas vs nike, message=FALSE, warning=FALSE--------------------------------------------------------------
 # Import cleaned tweets
 #partially_cleaned_tweets <- 
 #  read_csv('./_data/manipulated/partially_cleaned_tweets.csv')
@@ -825,5 +825,5 @@ pyramid.plot(lx         = top15$nike, #left
              unit       = 'Word Frequency',
              lxcol      = 'darkblue',
              rxcol      = 'darkred') 
-```
 
+#' 

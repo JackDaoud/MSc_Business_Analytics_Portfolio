@@ -1,29 +1,11 @@
----
-title: "Document Classification Model"
-subtitle: "Informing Government Policy Decisions"
-author: "by Jack Daoud"
-output:
-  html_notebook:
-    number_sections: yes
-    theme: readable
-    highlight: pygments
-    toc: yes
-    toc_float:
-      collapsed: no
-  html_document:
-    toc: yes
-    df_print: paged
----
+#' title: Document Classification Model
+#" subtitle: Informing Government Policy Decisions
+#' author: Jack Daoud
 
-# Scenario
-
-You work for a US software company working with the US government.  Your client is concerned with interactions on social media related to civil unrest and political protesting in order to help identify themes that can inform improved policing and policies.  Historically the client would directly interview protesters, asking for social media handles directly.  After which the organization would research the posts of the individuals looking for qualitative insights related to their research.  Since not all user posts are relevant, the research required time intensive manual labeling of social media posts from a particular user.  The labels would be related to civil, political discourse or not.
-
-You have been asked to explore the existing dataset of manually labeled documents then create a document classification system.  This will save money by avoiding human labeling and enable quicker identification of users and their related texts.  
-
+  
 # Setup
 
-```{r options & functions & packages, message=FALSE, warning=FALSE, include=FALSE}
+
 # load Packages
 lapply(c('plyr', "stringi", 'text2vec', 'glmnet', "qdap", "tm", "ggthemes", 
          'magrittr', 'ggplot2', 'dplyr', 'readr', 'stringr', 'tidyr',
@@ -40,11 +22,11 @@ Sys.setlocale('LC_ALL', 'C')
 
 # set working directory
 #setwd('~/Documents/Github/hult_NLP/personal/HW/HW2')
-```
+
 
 # Sample
 
-```{r data}
+
 # Load data
 trainingTXT <- read.csv('./_data/student_tm_case_training_data.csv')
 testTXT     <- read.csv('./_data/student_tm_case_score_data.csv')
@@ -58,11 +40,11 @@ names(testTXT)[1:2]     <- c("doc_id", "text")
 idx          <- createDataPartition(trainingTXT$label,p=.7,list=F)
 trainTXT     <- trainingTXT[idx,]
 validateTXT  <- trainingTXT[-idx,]
-```
+
 
 # Explore
 
-```{r corpus & frequency DF}
+
 # Partially text column & save partially cleaned data
 trainingTXT$text  <- basicSubs(trainingTXT$text)
 
@@ -83,9 +65,9 @@ TDMm <- as.matrix(TDM)
 tweetSums <- rowSums(TDMm)
 tweetFreq <- data.frame(word=names(tweetSums),frequency=tweetSums)
 rownames(tweetFreq) <- NULL
-```
 
-```{r label proportions, message=FALSE, warning=FALSE}
+
+
 # Are the labels balanced or unbalanced?
 classification <- as.data.frame(ifelse(trainingTXT$label == 1, "Yes", "No"))
 names(classification)[1] <- "label"  
@@ -112,9 +94,9 @@ classification %>%
        y    = "Count")
 
 rm(classification)
-```
 
-```{r political associations, message=FALSE, warning=FALSE}
+
+
 # Renaming
 tdm <- TDM
 
@@ -177,9 +159,9 @@ ggplot(two_terms_corrs_gathered,
 # Clean environment
 rm(corr1, corr2, corr3, corr4, tdm, toi1, toi2, toi3, toi4, corlimit,
    two_terms_corrs, two_terms_corrs_1, two_terms_corrs_2, two_terms_corrs_gathered)
-```
 
-```{r word clouds}
+
+
 wordcloud(words        = tweetFreq$word, 
           freq         = tweetFreq$frequency, 
           min.freq     = 20,
@@ -190,11 +172,11 @@ wordcloud(words        = tweetFreq$word,
 
 # Clean environment
 rm(tweetFreq, tweetSums, trainingCorpus, TDM, TDMm)
-```
+
 
 # Modify
 
-```{r modify}
+
 # Instantiate stopwords
 stopWords <- c(stopwords('SMART'), stopwords('english'))
 
@@ -258,11 +240,11 @@ validateDTM  <- create_dtm(validateIterMaker, trainVectorizer)
 
 # Take the vocabulary lexicon and the pruned text function to make a DTM
 #testDTM <- create_dtm(testIterMaker, trainVectorizer)
-```
+
 
 # Model
 
-```{r build models}
+
 ######################### Training Set Model ######################### 
 trainTextFit <- cv.glmnet(trainDTM,
                           y            = as.factor(trainTXT$label),
@@ -277,23 +259,23 @@ trainingPreds <- predict(trainTextFit, trainDTM, type = 'class')
 
 # Make validation predictions
 validationPreds <- predict(trainTextFit, validateDTM, type = 'class')
-```
- 
+
+
 # Assess
 
-```{r training model accuracy}
+
 # Print confusion matrix
 confusionMatrix(as.factor(trainingPreds),
                 as.factor(trainTXT$label))
-```
 
-```{r validation model accuracy}
+
+
 # Print confusion matrix
 confusionMatrix(as.factor(validationPreds),
                 as.factor(validateTXT$label))
-```
 
-```{r coefficients of training model, message=FALSE, warning=FALSE}
+
+
 # Check for best terms by coefficient
 bestTerms <- subset(as.matrix(coefficients(trainTextFit)), 
                     as.matrix(coefficients(trainTextFit)) !=0)
@@ -343,11 +325,11 @@ bestTerms %>%
 rm(testTXT, trainDTM, trainingPreds, trainPrunedtextVocab, trainTextFit,
    trainTextVocab, trainTXT, validateDTM, validatePrunedtextVocab, bestTerms,
    validateTextFit, validateTextVocab, validateTXT, validationPreds, trainingTXT)
-```
+
 
 # Final Model & Scoring
 
-```{r final model}
+
 
 # Import original train & test sets
 trainTXT <- read.csv('./_data/student_tm_case_training_data.csv')
@@ -362,11 +344,11 @@ stopWords <- c(stopwords('SMART'), stopwords('english'))
 # Clean, extract text and get into correct objects
 cleanTrain <- cleanCorpus(VCorpus(VectorSource(trainTXT$text)), stopWords)
 cleanTrain <- data.frame(text = unlist(sapply(cleanTrain, `[`, "content")),
-                       stringsAsFactors=F)
+                         stringsAsFactors=F)
 
 cleanTest <- cleanCorpus(VCorpus(VectorSource(testTXT$text)), stopWords)
 cleanTest <- data.frame(text = unlist(sapply(cleanTest, `[`, "content")),
-                       stringsAsFactors=F)
+                        stringsAsFactors=F)
 
 # Combine the matrices to the original to get the tokens joined
 allDTM        <- c(cleanTrain[,1], cleanTest[,1])
@@ -394,4 +376,4 @@ scoredData <- cbind(testTXT, resultsTest)
 
 # Write as CSV
 write.csv(scoredData, './Daoud_TM_scores.csv', row.names = F)
-```
+

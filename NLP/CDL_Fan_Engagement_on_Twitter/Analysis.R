@@ -1,35 +1,35 @@
----
-title: "Text Analysis: Call of Duty League"
-author: "by Jack Daoud"
-output:
-  html_notebook:
-    number_sections: yes
-    theme: readable
-    highlight: pygments
-    toc: yes
-    toc_float:
-      collapsed: no
-  html_document:
-    toc: yes
-    df_print: paged
----
-
-# Outline of Chunks:
-
-- Chunk 01: Import functions, packages and set options.
-- Chunk 02: Import team follower time line data and filter to CDL related documents
-- Chunk 03: Process text column of data set in the form of simple substitutions
-- Chunk 04: Create & clean corpus
-- Chunk 05: Create unigram & bigram TDM
-- Chunk 06: Plot number of followers per team
-- Chunk 07: Plot polarity distribution
-- Chunk 08: Plot sentiment radar chart
-- Chunk 09: Plot mentions per team (Frequency)
-- Chunk 10: Plot pyramid plot between Optic & Empire
-- Chunk 11: Plot associations dot plot (CDL)
-- Chunk 12: Plot associations dot plot (Teams)
-
-```{r options & functions & packages, message=FALSE, warning=FALSE, include=FALSE}
+#' ---
+#' title: "Text Analysis: Call of Duty League"
+#' author: "by Jack Daoud"
+#' output:
+#'   html_notebook:
+#'     number_sections: yes
+#'     theme: readable
+#'     highlight: pygments
+#'     toc: yes
+#'     toc_float:
+#'       collapsed: no
+#'   html_document:
+#'     toc: yes
+#'     df_print: paged
+#' ---
+#' 
+#' # Outline of Chunks:
+#' 
+#' - Chunk 01: Import functions, packages and set options.
+#' - Chunk 02: Import team follower time line data and filter to CDL related documents
+#' - Chunk 03: Process text column of data set in the form of simple substitutions
+#' - Chunk 04: Create & clean corpus
+#' - Chunk 05: Create unigram & bigram TDM
+#' - Chunk 06: Plot number of followers per team
+#' - Chunk 07: Plot polarity distribution
+#' - Chunk 08: Plot sentiment radar chart
+#' - Chunk 09: Plot mentions per team (Frequency)
+#' - Chunk 10: Plot pyramid plot between Optic & Empire
+#' - Chunk 11: Plot associations dot plot (CDL)
+#' - Chunk 12: Plot associations dot plot (Teams)
+#' 
+## ----options & functions & packages, message=FALSE, warning=FALSE, include=FALSE-------------------------------
 # load Packages
 lapply(c('lubridate', "plyr", "stringi", "ggdendro", 'dendextend', 'pbapply',
          'circlize', "qdap", "tm", "docstring", "ggthemes", 'magrittr',
@@ -48,9 +48,9 @@ Sys.setlocale('LC_ALL', 'C')
 # set working directory
 #setwd('~/Documents/Github/hult_NLP/personal/case_COD') # Desktop
 #setwd('~/Library/Mobile Documents/com~apple~CloudDocs/Documents/GitHub/hult_NLP/personal/case_COD') # Laptop
-```
 
-```{r import & filter team follower data, message=FALSE, warning=FALSE}
+#' 
+## ----import & filter team follower data, message=FALSE, warning=FALSE------------------------------------------
 set.seed(123)
 
 #### Optic Chicago ####
@@ -163,9 +163,9 @@ write.csv(teamFollowers,
 
 # Clean Environment
 rm(followersDallas, followersGuerillas, followersOptic, followersRokkr)
-```
 
-```{r process text column (gsub & emoji), message=FALSE, warning=FALSE}
+#' 
+## ----process text column (gsub & emoji), message=FALSE, warning=FALSE------------------------------------------
 set.seed(123)
 
 # Import data
@@ -186,9 +186,9 @@ rm(emojis)
 # Export partially cleaned tweets as csv
 write.csv(teamFollowers,'./_data/_manipulated/teamFollowersSubbed.csv', 
           row.names = F)
-```
 
-```{r process & clean corpus, message=FALSE, warning=FALSE}
+#' 
+## ----process & clean corpus, message=FALSE, warning=FALSE------------------------------------------------------
 # Import partially cleaned tweets
 teamFollowers <- read_csv( './_data/_manipulated/teamFollowersSubbed.csv')
 
@@ -262,9 +262,9 @@ write.csv(cleanedCorpusDF,'./_data/_manipulated/cleanedCorpus.csv',
 
 # Clean environment
 rm(stopsAbbreviations, stopsIterative)
-```
 
-```{r create TDM (unigram & bigram), message=FALSE, warning=FALSE}
+#' 
+## ----create TDM (unigram & bigram), message=FALSE, warning=FALSE-----------------------------------------------
 # Import cleaned tweets
 #cleanedCorpusDF <- read_csv( './_data/_manipulated/cleanedCorpus.csv')
 #corpus <- VCorpus(VectorSource(cleanedCorpus))
@@ -276,9 +276,9 @@ TDMm  <- as.matrix(TDM)
 # BIGRAM Term Document Matrix
 biTDM  <- TermDocumentMatrix(corpus, control=list(tokenize=bigramTokens))
 biTDMm <- as.matrix(biTDM)
-```
 
-```{r followers per team, message=FALSE, warning=FALSE}
+#' 
+## ----followers per team, message=FALSE, warning=FALSE----------------------------------------------------------
 # Create data frame that holds teams and number of followers per team
 number_of_followers <- 
   data.frame(Teams = c('Atlanta Faze', 'Dallas Empire', 'Florida Mutineers',
@@ -324,9 +324,9 @@ ggsave("./_images/plots/followers_per_team.png",
 ################################################################################
 # Clear environment of what's no longer needed
 rm(number_of_followers, followers_per_team)
-```
 
-```{r polarity distribution, message=FALSE, warning=FALSE}
+#' 
+## ----polarity distribution, message=FALSE, warning=FALSE-------------------------------------------------------
 #Import cleaned tweets
 #cleanedCorpusDF <- read_csv( './_data/_manipulated/cleanedCorpus.csv')
 
@@ -360,9 +360,9 @@ polarity_distribution <-
 
 # save image
 ggsave("./_images/plots/polarity_distribution.png", polarity_distribution, bg = "transparent")
-```
 
-```{r sentiment radar chart, message=FALSE, warning=FALSE}
+#' 
+## ----sentiment radar chart, message=FALSE, warning=FALSE-------------------------------------------------------
 # Create DTM & tidy it 
 DTM      <- removeSparseTerms(DocumentTermMatrix(corpus),0.99)
 tidyCorp <- tidy(DTM)
@@ -398,9 +398,9 @@ emos <-
 # Plot radar chart
 chartJSRadar(scores = emos, labelSize = 13, showLegend = F,
              height = 500)
-```
 
-```{r mentions per team, message=FALSE, warning=FALSE}
+#' 
+## ----mentions per team, message=FALSE, warning=FALSE-----------------------------------------------------------
 # Import cleaned corpus
 teamFollowers <- read_csv('./_data/_manipulated/teamFollowersSubbed.csv')
 
@@ -441,9 +441,9 @@ ggsave("./_images/plots/mentions_per_team.png", mentions_per_team, bg = "transpa
 
 # clean environment
 rm(optic, empire, rokkr, guerrillas, teamFreq, mentions_per_team, teamFollowers)
-```
 
-```{r pyramid plot, message=FALSE, warning=FALSE}
+#' 
+## ----pyramid plot, message=FALSE, warning=FALSE----------------------------------------------------------------
 
 ## OPTIC vs EMPIRE
 
@@ -505,9 +505,9 @@ pyramid.plot(lx         = top15$optic, #left
              unit       = 'Word Frequency',
              lxcol      = 'darkblue',
              rxcol      = 'darkred') 
-```
 
-```{r cdl associations, message=FALSE, warning=FALSE}
+#' 
+## ----cdl associations, message=FALSE, warning=FALSE------------------------------------------------------------
 # CDL associations
 cdlAssociations <- findAssocs(TDM, 'cdl', 0.25)
 
@@ -540,9 +540,9 @@ ggsave("./_images/plots/associations_cdl.png", cdlAssocPlot, bg = "transparent")
 
 # Clean environment
 rm(cdlAssocDF, cdlAssocPlot, cdlAssociations)
-```
 
-```{r team associations, message=FALSE, warning=FALSE}
+#' 
+## ----team associations, message=FALSE, warning=FALSE-----------------------------------------------------------
 #Credit to Max Lembke's code from the NBA_case assignment
 
 # Renaming
@@ -611,11 +611,11 @@ ggsave("./_images/plots/associations_team.png", team_associations, bg = "transpa
 # Clean environment
 rm(corr1, corr2, corr3, corr4, tdm, toi1, toi2, toi3, toi4, corlimit, team_associations,
    two_terms_corrs, two_terms_corrs_1, two_terms_corrs_2, two_terms_corrs_gathered)
-```
 
---------------------------------------------------------------------------------
-
-```{r NOT USED top unigrams (bar plot & wordcloud), message=FALSE, warning=FALSE}
+#' 
+#' --------------------------------------------------------------------------------
+#' 
+## ----NOT USED top unigrams (bar plot & wordcloud), message=FALSE, warning=FALSE--------------------------------
 # Create frequency data frame
 tweetSums <- rowSums(TDMm)
 tweetFreq <- data.frame(word=names(tweetSums),frequency=tweetSums)
@@ -662,9 +662,9 @@ wordcloud(words        = tweetFreq$word,
           rot.per      = 0.35, 
           colors       = c('black', 'darkblue', 'darkred'),
           use.r.layout = T)
-```
 
-```{r NOT USED top bigrams (bar plot & wordcloud), message=FALSE, warning=FALSE}
+#' 
+## ----NOT USED top bigrams (bar plot & wordcloud), message=FALSE, warning=FALSE---------------------------------
 # Create frequency data frame
 tweetSums <- rowSums(biTDMm)
 tweetFreq <- data.frame(word=names(tweetSums),frequency=tweetSums)
@@ -712,9 +712,9 @@ wordcloud(words        = tweetFreq$word,
           rot.per      = 0.35, 
           colors       = c('black', 'darkblue', 'darkred'),
           use.r.layout = T)
-```
 
-```{r NOT USED polarity word cloud, message=FALSE, warning=FALSE}
+#' 
+## ----NOT USED polarity word cloud, message=FALSE, warning=FALSE------------------------------------------------
 # Import polarized tweets
 cleanedCorpusDF <- read_csv( './_data/_manipulated/cleanedCorpusPolarity.csv')
 
@@ -750,6 +750,6 @@ colnames(polarity_TDMm) <- c('Positive', 'Negative')
 comparison.cloud(term.matrix = polarity_TDMm,
                  max.words   = 25,
                  colors      = c('darkgreen', 'darkred'))
-```
 
-
+#' 
+#' 
