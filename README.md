@@ -12,4 +12,5 @@ This is a portfolio of all my projects from my Master of Science in Business Ana
     3. [Tweet Classification](https://github.com/JackDaoud/Hult_Portfolio/tree/main/NLP/Tweet_Classification_Model)
 5. [Machine Learning Business Case](https://github.com/JackDaoud/Hult_Portfolio/tree/main/ML_Business_Case)
 6. [Windows or Mac](https://github.com/JackDaoud/Hult_Portfolio/tree/main/Windows_or_Mac)
-7. [Profit Optimization](https://github.com/JackDaoud/Hult_Portfolio/tree/main/Profit_Optimization)
+7. [SQL Advertising Management Platform](https://github.com/maxlembke/SQL_Advertising_Management_Platform)
+8. [Profit Optimization](https://github.com/maxlembke/Data_Optimization)
