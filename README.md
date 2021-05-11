@@ -1,6 +1,6 @@
 # MSc. Business Analytics Portfolio
 
-This is a portfolio of **8 projects** from my _Master of Science in Business Analytics_ at Hult International Business School (2020/21).
+This is a portfolio of **8 projects** from my _Master of Science in Business Analytics_ at Hult IBS (2020/21).
 
 # Projects:
 
