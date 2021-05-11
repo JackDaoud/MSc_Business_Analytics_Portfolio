@@ -1,12 +1,10 @@
 ![](https://github.com/JackDaoud/MSc_Business_Analytics_Portfolio/blob/main/MsBA%20Portfolio%20Git%20Background.png) 
-# MSc. Business Analytics Portfolio
+# Portfolio
 
-This is a portfolio of **8 projects** from my _Master of Science in Business Analytics_ at Hult IBS (2020/21).
+This is a portfolio of **8 projects** from my **_Master of Science in Business Analytics_** at Hult IBS (2020/21).
 
-# Projects:
-
-| Title       | Description | Collaborators     |
-| :---        |    :----  |          ---: |
+| Project     | Description | Collaborators |
+| :---        |    :----    |          ---: |
 | [Text Adventure Game](https://github.com/JackDaoud/Hult_Portfolio/tree/main/Text_Adventure_Game) | 3-round fantasy text adventure game that can be played in under 4 minutes. Get your fortune told and battle an evil warlock to save the Elven queen! <br /> ![Python 3.5](https://img.shields.io/static/v1?style=for-the-badge&label=+&message=Python&logo=python&logoColor=green&color=white) | -   |
 | | | |
 | [World Bank EDA](https://github.com/JackDaoud/Hult_Portfolio/tree/main/World_Bank_EDA) | EDA on World Bank data focusing on the Arabian Peninsula region. <br /> ![Python 3.5](https://img.shields.io/static/v1?style=for-the-badge&label=+&message=Python&logo=python&logoColor=green&color=white)| [Estrella Spaans](https://github.com/EstrellaSpaans) & [Sara Krause](https://github.com/Sara-Krause) |
