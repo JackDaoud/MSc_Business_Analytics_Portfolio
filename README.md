@@ -1,3 +1,4 @@
+![](https://github.com/JackDaoud/MSc_Business_Analytics_Portfolio/blob/main/MsBA%20Portfolio%20Git%20Background.png) 
 # MSc. Business Analytics Portfolio
 
 This is a portfolio of **8 projects** from my _Master of Science in Business Analytics_ at Hult IBS (2020/21).
