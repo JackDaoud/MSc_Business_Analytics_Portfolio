@@ -1,7 +1,5 @@
 # What affects the Price of Airbnb Listings in NYC?
 
-@Alexey Delete this line
-
 This project aims to answer that question by conducting statistical analysis with R using RStudio.
 
 This research project builds off of previous findings from <em><a href=https://www.researchgate.net/publication/326019478_Accommodation_prices_on_Airbnb_effects_of_host_experience_and_market_demand>Accomodation prices on Airbnb effects of host experience and market demand</a></em> and <em><a href=https://www.researchgate.net/publication/314571064_Agent_Behavior_in_the_Sharing_Economy_Evidence_from_Airbnb>Agent Behavior in the Sharing Economy: Evidence from Airbnb</a></em>.
