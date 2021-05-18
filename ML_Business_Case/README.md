@@ -1,6 +1,6 @@
 # Machine Learning in Business
 
-**NOTE: this README will be updated with granular details of important findings and model performance in due time.**
+> Note this README is still a work-in-progress
 
 Capstone Project of a MSc. in Business Analytics. 
 
