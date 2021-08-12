@@ -25,6 +25,10 @@ Apprentice Chef is a hypothetical company with a unique spin on cooking at home.
   3. Bayesian Automatic Relevance Determionation (ARD)
   4. K Nearest Neighbors (KNN)
 
+- Results:
+
+<img src='./_images/revenue_models.png' />
+
 <br><br>
 ## Part 3 - Cross-sell Classification
 
@@ -34,6 +38,10 @@ Apprentice Chef is a hypothetical company with a unique spin on cooking at home.
   2. Decision Tree
   3. Random Forest
   4. Gradient Boosted Machines (GBM)
+
+- Results:
+
+  <img src='./_images/subscription_models.png' />
 
 <br><br>
 ## Part 4 - Report to Management
